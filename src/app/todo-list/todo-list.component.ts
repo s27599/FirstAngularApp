@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Todo} from "../shared/interfaces/todo.interface";
 
 @Component({
   selector: 'app-todo-list',
@@ -6,14 +7,24 @@ import {Component} from '@angular/core';
   styleUrl: './todo-list.component.css'
 })
 export class TodoListComponent {
-  todos: string[] = [];
+  todos: Todo[] = [];
+  errorMessage: string = '';
+  // testSwitchCase = 'tak';
 
   addTodo(todo:string): void {
     if(todo.length<=3){
-      alert("zadanie powinno mieć co najmniej 4 znaki");
+      this.errorMessage = 'zadanie powinno mieć co najmniej 4 znaki';
       return;
     }
-    this.todos.push(todo);
+    this.todos.push({name:todo, isComplete: false});
     console.log("Aktualna lista todo: ", this.todos);
+  }
+
+  changeTodoStatus(todo:Todo) {
+    todo.isComplete = !todo.isComplete
+  }
+
+  clearErrorMessage() {
+    this.errorMessage = '';
   }
 }
